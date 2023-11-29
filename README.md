@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-# aarogya
 This is a angular app (admin) used for healthcare management.
 =======
 # Aarogya
