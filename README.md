@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 # aarogya
 This is a angular app (admin) used for healthcare management.
 =======
@@ -30,3 +31,6 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
 >>>>>>> a36a277d63bcb59d6427b668727ad4e565f5cc0e
+=======
+# aarogya
+>>>>>>> eff9202c1e35042dac336213a00094541d89b8b9
