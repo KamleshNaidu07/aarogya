@@ -1,0 +1,40 @@
+/* Style the container to display cards in a row */
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+/* Style the individual cards */
+.mat-card {
+    width: calc(50% - 30px); /* 50% width with some spacing */
+    margin: 5px; /* Add spacing between cards */
+    background-color: #3498db; /* Set card background color */
+    border: 2px solid #2980b9; /* Add a border with a darker shade */
+    border-radius: 10px; /* Add rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add a subtle shadow effect */
+    transition: transform 0.2s; /* Add a transform effect on hover */
+
+    /* Center the card content */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Style the card title */
+.mat-card-title {
+    color: #fff; /* Set text color for the title */
+}
+
+/* Style the card content */
+.mat-card-content {
+    font-size: 18px; /* Set font size for the content */
+    color: #fff; /* Set text color for the content */
+}
+
+/* Add hover effect to cards */
+.mat-card:hover {
+    transform: scale(1.05); /* Scale the card on hover for a slight zoom effect */
+    cursor: pointer;
+}

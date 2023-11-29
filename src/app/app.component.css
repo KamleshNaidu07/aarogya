@@ -1,0 +1,59 @@
+/* for toolbar start */
+.example-spacer {
+    flex: 1 1 auto;
+}
+
+.example-icon {
+    padding: 0 14px;
+    cursor: pointer;
+}
+
+.profile-icon-container img {
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+}
+
+/* for toolbar end */
+/* for sidenav start */
+.container {
+    height: calc(100vh - 64px);/* Subtract the height of the toolbar */
+}
+
+mat-sidenav {
+    width: 240px;
+    background-color: #f0f0f0;
+}
+
+/* for sidenav end */
+
+/* for notification start */
+.notification-content {
+    display: flex;
+    flex-direction: column;
+}
+.notification-title {
+    font-weight: bold;
+    margin-bottom: 4px;
+    color: #333;/* Customize the color */
+}
+.notification-message {
+    color: #666;/* Customize the color */
+}
+.notification-divider {
+    height: 1px;
+    background-color: #ccc;/* Customize the color */
+    margin: 8px 0;
+  }
+/* for notification end */
+
+/* for page content start */
+.page-content {
+    padding: 16px;
+}
+/* for page content end */
+
+/* ----------Mobile CSS below---------- */
+@media (max-width: 480px) {
+
+}
