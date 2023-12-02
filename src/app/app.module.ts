@@ -12,6 +12,7 @@ import { MaterialModule } from './material/material.module';
 
 import { DashboardModule } from './dashboard/dashboard.module';
 import { PatientModule } from './patient/patient.module';
+import { DoctorModule } from './doctor/doctor.module';
 import { AuthenticateModule } from './authenticate/authenticate.module';
 
 
@@ -30,6 +31,7 @@ import { AuthenticateModule } from './authenticate/authenticate.module';
     MaterialModule,
     DashboardModule,
     PatientModule,
+    DoctorModule,
     AuthenticateModule,
   ],
   providers: [],
