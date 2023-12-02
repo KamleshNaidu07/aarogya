@@ -1,0 +1,10 @@
+.filter-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.filter-input {
+    flex-grow: 1;
+    margin-right: 10px; /* Add some spacing between the filter input and the button */
+}

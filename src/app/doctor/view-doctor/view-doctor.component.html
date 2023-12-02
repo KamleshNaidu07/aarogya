@@ -1,1 +1,66 @@
-<p>view-doctor works!</p>
+<div class="page-content">
+    <h1>Doctor</h1>
+    <!-- <p>This is the Patient page content. Replace this with your actual content.</p> -->
+
+    <!-- Filter Input -->
+    <div class="filter-container">
+        <div class="filter-input">
+            <mat-form-field appearance="fill" class="filter-input">
+                <mat-label>Filter Doctors</mat-label>
+                <input matInput (input)="onFilterChange()" [(ngModel)]="searchTerm"/>
+                <button matSuffix mat-icon-button aria-label="Clear" *ngIf="searchTerm" (click)="clearFilter()">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-form-field>    
+        </div>
+        
+        <!-- Add User Button -->
+        <div class="add-button">
+            <button mat-raised-button color="primary">Add Doctor Details</button>    
+        </div>
+    </div>
+
+
+    <!-- Table -->
+    <mat-table [dataSource]="filteredDoctors" class="mat-elevation-z8" *ngIf="filteredDoctors.length > 0">
+        <!-- Columns -->
+        <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef> ID </mat-header-cell>
+            <mat-cell *matCellDef="let doctor"> {{ doctor.id }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+            <mat-cell *matCellDef="let doctor"> {{ doctor.first_name+' '+doctor.last_name }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="email">
+            <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
+            <mat-cell *matCellDef="let user"> {{ user.email }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="phone">
+            <mat-header-cell *matHeaderCellDef> Phone </mat-header-cell>
+            <mat-cell *matCellDef="let doctor"> {{ doctor.phone_number }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+            <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+            <mat-cell *matCellDef="let doctor">
+                <button mat-icon-button>
+                    <mat-icon>edit</mat-icon>
+                </button>
+            </mat-cell>
+        </ng-container>
+
+        <!-- Column headers -->
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+        <!-- Table rows -->
+        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    </mat-table>
+
+    <!-- Pagination -->
+    <mat-paginator [length]="totalDoctors" [pageIndex]="pageIndex" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+        (page)="onPageChange($event)" showFirstLastButtons></mat-paginator>
+</div>
