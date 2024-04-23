@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http'; // Import HttpClient
 import * as moment from 'moment';
 
 import { MatDialog } from '@angular/material/dialog';
+import { AddDoctorDialogComponent } from '../add-doctor-dialog/add-doctor-dialog.component';
 
 export interface Doctor {
   id: number;
@@ -105,4 +106,19 @@ export class ViewDoctorComponent {
     this.fetchDoctors();
     this.fetchTotalDoctorsCount();
   }
+
+  addDoctor(): void {
+    const dialogRef = this.dialog.open(AddDoctorDialogComponent, {
+      width: '400px', // You can adjust the width as needed
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      // This function will be called when the dialog is closed
+
+      if (result === true) {
+        this.fetchDoctors();
+        this.fetchTotalDoctorsCount();
+      }
+    });
+  }
+
 }
