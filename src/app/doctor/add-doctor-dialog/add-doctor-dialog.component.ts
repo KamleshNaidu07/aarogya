@@ -71,7 +71,7 @@ export class AddDoctorDialogComponent {
         });
       },
       (error) => {
-        console.error('Error adding user:', error);
+        console.error('Error adding doctor:', error);
         Swal.fire({
           icon: 'error',
           title: 'Error',
