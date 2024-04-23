@@ -34,9 +34,6 @@ export class AddDoctorDialogComponent {
       { type: 'required', message: 'Phone Number is required.' },
       { type: 'pattern', message: 'Invalid phone number format.' },
     ],
-    address: [
-      { type: 'required', message: 'Address is required.' },
-    ],
   };
 
   constructor(
