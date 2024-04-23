@@ -4,7 +4,8 @@
         <mat-form-field appearance="outline" class="full-width">
             <mat-label>First Name</mat-label>
             <input matInput formControlName="first_name">
-            <mat-error *ngIf="doctorForm?.get('first_name')?.hasError('required')">{{ errorMessages.first_name[0].message
+            <mat-error *ngIf="doctorForm?.get('first_name')?.hasError('required')">{{
+                errorMessages.first_name[0].message
                 }}</mat-error>
         </mat-form-field>
         <mat-form-field appearance="outline" class="full-width">
@@ -20,6 +21,16 @@
                 }}</mat-error>
             <mat-error *ngIf="doctorForm?.get('email')?.hasError('email')">{{ errorMessages.email[1].message
                 }}</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Select specialization</mat-label>
+            <mat-select [(value)]="specializationForm" matInput formControlName="specialization">
+                <mat-option>None</mat-option>
+                <mat-option value="Cardiology">Cardiology</mat-option>
+                <mat-option value="Pediatrics">Pediatrics</mat-option>
+                <mat-option value="Orthopedics">Orthopedics</mat-option>
+                <mat-option value="Dermatology">Dermatology</mat-option>
+            </mat-select>
         </mat-form-field>
         <mat-form-field appearance="outline" class="full-width">
             <mat-label>Phone Number</mat-label>

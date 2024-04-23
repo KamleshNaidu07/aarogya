@@ -9,6 +9,7 @@ interface Doctor {
   last_name: string;
   email: string;
   phone_number: string;
+  specialization: string;
 }
 
 @Component({
@@ -18,6 +19,7 @@ interface Doctor {
 })
 export class AddDoctorDialogComponent {
   doctorForm: FormGroup;
+  specializationForm?: string;
 
   errorMessages = {
     first_name: [
@@ -46,6 +48,7 @@ export class AddDoctorDialogComponent {
       last_name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       phone_number: ['', [Validators.required, Validators.pattern(/^[6-9]\d{9}$/)]],
+      specialization: '',
     });
   }
 
