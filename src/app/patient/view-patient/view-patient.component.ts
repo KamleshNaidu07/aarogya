@@ -7,7 +7,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddUserDialogComponent } from '../add-user-dialog/add-user-dialog.component';
 import { EditUserDialogComponent } from '../edit-user-dialog/edit-user-dialog.component';
 
-
 export interface User {
   id: number;
   first_name: string;
@@ -19,12 +18,10 @@ export interface User {
 @Component({
   selector: 'app-view-patient',
   templateUrl: './view-patient.component.html',
-  styleUrls: ['./view-patient.component.css']
+  styleUrls: ['./view-patient.component.css'],
 })
 export class ViewPatientComponent {
-
-  constructor(private http: HttpClient, private dialog: MatDialog) { }
-
+  constructor(private http: HttpClient, private dialog: MatDialog) {}
 
   ngOnInit() {
     this.fetchUsers(); // Call the method to fetch users on component initialization
@@ -41,27 +38,30 @@ export class ViewPatientComponent {
   pageSizeOptions: number[] = [5, 10, 25, 30]; // Options for the page size dropdown
   totalUsers = 0;
 
-
   fetchUsers() {
     const apiUrl = 'http://localhost:3000/api/patients';
-    const queryParams = `?page=${this.pageIndex + 1}&limit=${this.pageSize}&searchTerm=${this.searchTerm}`;
+    const queryParams = `?page=${this.pageIndex + 1}&limit=${
+      this.pageSize
+    }&searchTerm=${this.searchTerm}`;
 
-    this.http.get<{ data: User[], totalCount: number }>(apiUrl + queryParams).subscribe(
-      (response) => {
-        if (response.data.length > 0) {
-          this.users = response.data;
-          // this.totalUsers = response.totalCount;
-          this.applyFilter();
-        } else {
-          this.users = []; // Clear the users array if no data
-          this.applyFilter(); // Remove this line if we want to put the last searched data but not matching current searched data
-          this.totalUsers = 0; // Reset the total user count
+    this.http
+      .get<{ data: User[]; totalCount: number }>(apiUrl + queryParams)
+      .subscribe(
+        (response) => {
+          if (response.data.length > 0) {
+            this.users = response.data;
+            // this.totalUsers = response.totalCount;
+            this.applyFilter();
+          } else {
+            this.users = []; // Clear the users array if no data
+            this.applyFilter(); // Remove this line if we want to put the last searched data but not matching current searched data
+            this.totalUsers = 0; // Reset the total user count
+          }
+        },
+        (error) => {
+          console.error('Error fetching patients:', error);
         }
-      },
-      (error) => {
-        console.error('Error fetching patients:', error);
-      }
-    );
+      );
   }
 
   fetchTotalUsersCount() {
@@ -84,8 +84,12 @@ export class ViewPatientComponent {
         user.first_name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
         user.last_name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
         user.email.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-        user.phone_number.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-        user.first_name.toLowerCase() + " " + user.last_name.toLowerCase().includes(this.searchTerm.toLowerCase()) // For full name filter case
+        user.phone_number
+          .toLowerCase()
+          .includes(this.searchTerm.toLowerCase()) ||
+        user.first_name.toLowerCase() +
+          ' ' +
+          user.last_name.toLowerCase().includes(this.searchTerm.toLowerCase()) // For full name filter case
     );
   }
 
@@ -115,7 +119,7 @@ export class ViewPatientComponent {
     const dialogRef = this.dialog.open(AddUserDialogComponent, {
       width: '400px', // You can adjust the width as needed
     });
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       // This function will be called when the dialog is closed
 
       if (result === true) {
@@ -138,10 +142,10 @@ export class ViewPatientComponent {
 
     const dialogRef = this.dialog.open(EditUserDialogComponent, {
       width: '400px', // You can adjust the width as needed
-      data: userToEdit // Pass the selected user to the dialog
+      data: userToEdit, // Pass the selected user to the dialog
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       // This function will be called when the dialog is closed
 
       if (result === true) {
