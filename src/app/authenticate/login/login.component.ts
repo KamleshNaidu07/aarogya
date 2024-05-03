@@ -42,19 +42,24 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       const { username, password } = this.loginForm.value;
 
-      if (this.authService.login(username, password)) {
-        // Successful login logic
-        this.authService.setAuthenticated(true);
-        // Redirect to the authenticated route
-        this.router.navigate(['/dashboard']);
-      } else {
-        // Failed login logic
-        Swal.fire({
-          icon: 'error',
-          title: 'Incorrect Password',
-          text: 'The password you entered is incorrect. Please try again.',
-        });
-      }
+      this.authService.authenticateUser(username, password).subscribe(
+        (response) => {
+          if (response.error) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Incorrect Password',
+              text: 'The password you entered is incorrect. Please try again.',
+            });
+          } else {
+            this.authService.setAuthenticated(true);
+            this.authService.setLocal();
+            this.router.navigate(['/dashboard']);
+          }
+        },
+        (error) => {
+          console.error(error);
+        }
+      );
     }
   }
 }
