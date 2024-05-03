@@ -4,6 +4,8 @@ import { HttpClient } from '@angular/common/http'; // Import HttpClient
 import * as moment from 'moment';
 
 import { MatDialog } from '@angular/material/dialog';
+import { AddDoctorDialogComponent } from '../add-doctor-dialog/add-doctor-dialog.component';
+import { EditDoctorDialogComponent } from '../edit-doctor-dialog/edit-doctor-dialog.component';
 
 export interface Doctor {
   id: number;
@@ -11,16 +13,16 @@ export interface Doctor {
   last_name: string;
   email: string;
   phone_number: string;
+  specialization: string;
 }
 
 @Component({
   selector: 'app-view-doctor',
   templateUrl: './view-doctor.component.html',
-  styleUrls: ['./view-doctor.component.css']
+  styleUrls: ['./view-doctor.component.css'],
 })
 export class ViewDoctorComponent {
-
-  constructor(private http: HttpClient, private dialog: MatDialog) { }
+  constructor(private http: HttpClient, private dialog: MatDialog) {}
 
   ngOnInit() {
     this.fetchDoctors(); // Call the method to fetch users on component initialization
@@ -39,24 +41,28 @@ export class ViewDoctorComponent {
 
   fetchDoctors() {
     const apiUrl = 'http://localhost:3000/api/doctors';
-    const queryParams = `?page=${this.pageIndex + 1}&limit=${this.pageSize}&searchTerm=${this.searchTerm}`;
+    const queryParams = `?page=${this.pageIndex + 1}&limit=${
+      this.pageSize
+    }&searchTerm=${this.searchTerm}`;
 
-    this.http.get<{ data: Doctor[], totalCount: number }>(apiUrl + queryParams).subscribe(
-      (response) => {
-        if (response.data.length > 0) {
-          this.doctors = response.data;
-          this.totalDoctors = response.totalCount;
-          this.applyFilter();
-        } else {
-          this.doctors = []; // Clear the users array if no data
-          this.applyFilter(); // Remove this line if we want to put the last searched data but not matching current searched data
-          this.totalDoctors = 0; // Reset the total user count
+    this.http
+      .get<{ data: Doctor[]; totalCount: number }>(apiUrl + queryParams)
+      .subscribe(
+        (response) => {
+          if (response.data.length > 0) {
+            this.doctors = response.data;
+            this.totalDoctors = response.totalCount;
+            this.applyFilter();
+          } else {
+            this.doctors = []; // Clear the users array if no data
+            this.applyFilter(); // Remove this line if we want to put the last searched data but not matching current searched data
+            this.totalDoctors = 0; // Reset the total user count
+          }
+        },
+        (error) => {
+          console.error('Error fetching patients:', error);
         }
-      },
-      (error) => {
-        console.error('Error fetching patients:', error);
-      }
-    );
+      );
   }
 
   fetchTotalDoctorsCount() {
@@ -76,11 +82,19 @@ export class ViewDoctorComponent {
   applyFilter() {
     this.filteredDoctors = this.doctors.filter(
       (doctor) =>
-        doctor.first_name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-        doctor.last_name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        doctor.first_name
+          .toLowerCase()
+          .includes(this.searchTerm.toLowerCase()) ||
+        doctor.last_name
+          .toLowerCase()
+          .includes(this.searchTerm.toLowerCase()) ||
         doctor.email.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-        doctor.phone_number.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-        doctor.first_name.toLowerCase() + " " + doctor.last_name.toLowerCase().includes(this.searchTerm.toLowerCase()) // For full name filter case
+        doctor.phone_number
+          .toLowerCase()
+          .includes(this.searchTerm.toLowerCase()) ||
+        doctor.first_name.toLowerCase() +
+          ' ' +
+          doctor.last_name.toLowerCase().includes(this.searchTerm.toLowerCase()) // For full name filter case
     );
   }
 
@@ -104,5 +118,46 @@ export class ViewDoctorComponent {
     this.pageSize = event.pageSize;
     this.fetchDoctors();
     this.fetchTotalDoctorsCount();
+  }
+
+  addDoctor(): void {
+    const dialogRef = this.dialog.open(AddDoctorDialogComponent, {
+      width: '400px', // You can adjust the width as needed
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      // This function will be called when the dialog is closed
+
+      if (result === true) {
+        this.fetchDoctors();
+        this.fetchTotalDoctorsCount();
+      }
+    });
+  }
+
+  editDoctor(doctor: Doctor): void {
+    const currentDateTime = moment().format();
+    const userToEdit = {
+      id: doctor.id,
+      first_name: doctor.first_name,
+      last_name: doctor.last_name,
+      email: doctor.email,
+      phone_number: doctor.phone_number,
+      specialization: doctor.specialization,
+      updated_at: currentDateTime,
+    };
+
+    const dialogRef = this.dialog.open(EditDoctorDialogComponent, {
+      width: '400px', // You can adjust the width as needed
+      data: userToEdit, // Pass the selected user to the dialog
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      // This function will be called when the dialog is closed
+
+      if (result === true) {
+        this.fetchDoctors();
+        this.fetchTotalDoctorsCount();
+      }
+    });
   }
 }

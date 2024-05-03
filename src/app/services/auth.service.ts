@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router'; // Import the Router service
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -8,27 +10,12 @@ export class AuthService {
   private isAuthenticated = false;
   private previousUrl: string = ''; // Initialize previousUrl
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private http: HttpClient) {
     // Check if there's a stored authentication state in local storage on service initialization
     const storedAuth = localStorage.getItem('isAuthenticated');
     if (storedAuth) {
       this.isAuthenticated = JSON.parse(storedAuth); // Parse the stored value to a boolean
     }
-  }
-
-  login(username: string, password: string): boolean {
-    // Implement your authentication logic here
-    // For example, check if the provided credentials are valid
-    if (username === 'admin' && password === 'password') {
-      this.isAuthenticated = true;
-      // Store the authentication state in local storage
-      localStorage.setItem(
-        'isAuthenticated',
-        JSON.stringify(this.isAuthenticated)
-      );
-      return true;
-    }
-    return false;
   }
 
   isAuthenticatedReturn(): boolean {
@@ -56,5 +43,28 @@ export class AuthService {
     localStorage.removeItem('isAuthenticated');
 
     this.router.navigate(['/login']);
+  }
+
+  authenticateUser(username:string, password:string): Observable<any>
+  {
+    const apiUrl = 'http://localhost:3000/api/users/login';
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+    });
+
+    let payload = {
+      username: username,
+      password: password
+    }
+
+    return this.http.post<any>(apiUrl, payload, {headers});
+  }
+
+  setLocal():void
+  {
+    localStorage.setItem(
+      'isAuthenticated',
+      JSON.stringify(this.isAuthenticated)
+    );
   }
 }
