@@ -52,7 +52,6 @@ export class LoginComponent {
             });
           } else {
             this.authService.setAuthenticated(true);
-            this.authService.setLocal();
             this.router.navigate(['/dashboard']);
           }
         },

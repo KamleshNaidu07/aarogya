@@ -40,7 +40,7 @@ export class AuthService {
     this.isAuthenticated = false;
 
     // Remove the stored authentication state from local storage
-    localStorage.removeItem('isAuthenticated');
+    // localStorage.removeItem('isAuthenticated');
 
     this.router.navigate(['/login']);
   }
