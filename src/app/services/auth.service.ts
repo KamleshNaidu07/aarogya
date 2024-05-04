@@ -12,10 +12,10 @@ export class AuthService {
 
   constructor(private router: Router, private http: HttpClient) {
     // Check if there's a stored authentication state in local storage on service initialization
-    const storedAuth = localStorage.getItem('isAuthenticated');
-    if (storedAuth) {
-      this.isAuthenticated = JSON.parse(storedAuth); // Parse the stored value to a boolean
-    }
+    // const storedAuth = localStorage.getItem('isAuthenticated');
+    // if (storedAuth) {
+    //   this.isAuthenticated = JSON.parse(storedAuth); // Parse the stored value to a boolean
+    // }
   }
 
   isAuthenticatedReturn(): boolean {
